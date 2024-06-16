@@ -16,7 +16,9 @@
 
 ### Association
 
-* has_many :items
+- has_many :purchases
+- has_many :items, through:purchases
+
 
 ## items table
 
@@ -35,7 +37,7 @@
 ### Association
 
 - belongs_to :user
-- belongs_to :purchase
+- has_many :purchases
 
 
 ## purchases table
@@ -47,20 +49,21 @@
 
 ### Association
 
-- has_one :item
-- belongs_to :destination
+- belongs_to :item
+- belongs_to :user
+- belongs_to :destinations
 
 ## destination table
 
 | Column                 | Type       | Options                        |
 |------------------------|------------|--------------------------------|
-| post_code              | integer    | null: false                    |
+| post_code              | string     | null: false                    |
 | date_of_shipment_id    | integer    | null: false                    |
-| municipalities         | string     | null: false                    |
+| municipality           | string     | null: false                    |
 | street_address         | string     | null: false                    |
 | building_name          | string     |                                |
 | tel                    | string     | null: false                    |
-| purchases              | references | null: false, foreign_key: true |
+| purchase               | references | null: false, foreign_key: true |
 
 ### Association
 
