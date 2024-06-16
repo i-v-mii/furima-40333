@@ -1,24 +1,65 @@
-# README
+# DB 設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users table
 
-Things you may want to cover:
+| Column             | Type                | Options                   |
+|--------------------|---------------------|---------------------------|
+| nickname           | string              | null: false               |
+| email              | string              | null: false, unique: true |
+| encrypted_password | string              | null: false               |
+| family_name        | string              | null: false               |
+| first_name         | string              | null: false               |
+| birthday           | date                | null: false               |
 
-* Ruby version
 
-* System dependencies
+### Association
 
-* Configuration
+* has_many :items
 
-* Database creation
+## items table
 
-* Database initialization
+| Column                              | Type       | Options                        |
+|-------------------------------------|------------|--------------------------------|
+| category                            | string     | null: false                    |
+| condition                           | string     | null: false                    |
+| delivery_charge                     | string     | null: false                    |
+| shipping_source                     | string     | null: false                    |
+| date_of_shipment                    | string     | null: false                    |
+| explanation                         | text       | null: false                    |
+| user                                | references | null: false, foreign_key: true |
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
+- belongs_to :purchase
 
-* Deployment instructions
 
-* ...
+## purchases table
+
+| Column                | Type       | Options                        |
+|-----------------------|------------|--------------------------------|
+| card_number_credit    | string     | null: false                    |
+| date_of_expiry        | string     | null: false                    |
+| security              | string     | null: false                    |
+| destination           | text       | null: false, foreign_key: true |
+| item                  | references | null: false, foreign_key: true |
+
+### Association
+
+- has_one :item
+- has_one :destination
+
+## destination table
+
+| Column          | Type       | Options                        |
+|-----------------|------------|--------------------------------|
+| post_code       | string     | null: false                    |
+| prefecture      | string     | null: false                    |
+| municipalities  | string     | null: false                    |
+| street_address  | string     | null: false                    |
+| building_name   | text       | null: false                    |
+| tel             | text       | null: false                    |
+
+### Association
+
+- belongs_to :purchase
