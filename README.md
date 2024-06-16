@@ -9,6 +9,8 @@
 | encrypted_password | string              | null: false               |
 | family_name        | string              | null: false               |
 | first_name         | string              | null: false               |
+| family_name_kana   | string              | null: false               |
+| first_name_kana    | string              | null: false               |
 | birthday           | date                | null: false               |
 
 
@@ -20,11 +22,13 @@
 
 | Column                              | Type       | Options                        |
 |-------------------------------------|------------|--------------------------------|
-| category                            | string     | null: false                    |
-| condition                           | string     | null: false                    |
-| delivery_charge                     | string     | null: false                    |
-| shipping_source                     | string     | null: false                    |
-| date_of_shipment                    | string     | null: false                    |
+| product_name                        | string     | null: false                    |
+| price                               | integer    | null: false                    |
+| category_id                         | integer    | null: false                    |
+| condition_id                        | integer    | null: false                    |
+| delivery_charge_id                  | integer    | null: false                    |
+| shipping_source_id                  | integer    | null: false                    |
+| date_of_shipment_id                 | integer    | null: false                    |
 | explanation                         | text       | null: false                    |
 | user                                | references | null: false, foreign_key: true |
 
@@ -38,28 +42,26 @@
 
 | Column                | Type       | Options                        |
 |-----------------------|------------|--------------------------------|
-| card_number_credit    | string     | null: false                    |
-| date_of_expiry        | string     | null: false                    |
-| security              | string     | null: false                    |
-| destination           | text       | null: false, foreign_key: true |
+| user                  | references | null: false, foreign_key: true |
 | item                  | references | null: false, foreign_key: true |
 
 ### Association
 
 - has_one :item
-- has_one :destination
+- belongs_to :destination
 
 ## destination table
 
-| Column          | Type       | Options                        |
-|-----------------|------------|--------------------------------|
-| post_code       | string     | null: false                    |
-| prefecture      | string     | null: false                    |
-| municipalities  | string     | null: false                    |
-| street_address  | string     | null: false                    |
-| building_name   | text       | null: false                    |
-| tel             | text       | null: false                    |
+| Column                 | Type       | Options                        |
+|------------------------|------------|--------------------------------|
+| post_code              | integer    | null: false                    |
+| date_of_shipment_id    | integer    | null: false                    |
+| municipalities         | string     | null: false                    |
+| street_address         | string     | null: false                    |
+| building_name          | string     |                                |
+| tel                    | string     | null: false                    |
+| purchases              | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :purchase
+- has_one :purchase
