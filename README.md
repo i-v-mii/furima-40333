@@ -16,8 +16,7 @@
 
 ### Association
 
-- has_many :purchases
-- has_many :items, through:purchases
+- has_many :items
 
 
 ## items table
@@ -37,7 +36,7 @@
 ### Association
 
 - belongs_to :user
-- has_many :purchases
+- has_one :purchases
 
 
 ## purchases table
@@ -50,8 +49,7 @@
 ### Association
 
 - belongs_to :item
-- belongs_to :user
-- belongs_to :destinations
+- has_one :destinations
 
 ## destination table
 
@@ -67,4 +65,4 @@
 
 ### Association
 
-- has_one :purchase
+- belong_to :purchase
