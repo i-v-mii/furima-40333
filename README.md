@@ -17,7 +17,6 @@
 ### Association
 
 - has_many :items
-- has_one :destination
 - has_many :purchases
 
 
@@ -52,8 +51,9 @@
 
 - belongs_to :item
 - belongs_to :user
+- belongs_to :destination
 
-## destination table
+## destinations table
 
 | Column                 | Type       | Options                        |
 |------------------------|------------|--------------------------------|
@@ -67,4 +67,4 @@
 
 ### Association
 
-- belong_to :user
+- belong_to :purchase
