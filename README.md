@@ -51,7 +51,7 @@
 
 - belongs_to :item
 - belongs_to :user
-- belongs_to :destination
+- has_one :destination
 
 ## destinations table
 
@@ -67,4 +67,4 @@
 
 ### Association
 
-- belong_to :purchase
+- belongs_to :purchase
