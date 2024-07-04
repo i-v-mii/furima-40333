@@ -19,4 +19,8 @@ class Item < ApplicationRecord
   validates :explanation, presence: true
   validates :image, presence: true
 
+  # def sold?
+    # order.present?
+  # end
+
 end
