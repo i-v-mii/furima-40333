@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :make_item, only: [:show, :edit, :update]
+  before_action :item_owner, only: [:edit, :update]
 
   def index
     @items = Item.order("created_at DESC")
@@ -20,23 +22,24 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to @item, notice: 'Item was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
+  
+  def make_item
+    @item = Item.find(params[:id])
+  end
 
   def item_params
     params.require(:item).permit(:product_name,
@@ -50,4 +53,14 @@ class ItemsController < ApplicationController
                                   :image
                                 )
   end
+
+  def item_owner
+    unless current_user == @item.user
+      redirect_to root_path
+    end
+    #if @item.sold?
+    #  redirect_to root_path, alert: '売却済みの商品の情報は編集できません。'
+    #end
+  end
+
 end
