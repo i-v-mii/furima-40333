@@ -28,7 +28,7 @@
       <% if current_user == @item.user %>
         <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
         <p class="or-text">or</p>
-        <%= link_to "削除", "#", method: :delete, remote: true, class: "item-destroy", data: { turbo_method: :delete } %>
+        <%= link_to "削除",item_path(@item), method: :delete, remote: true, class: "item-destroy", data: { turbo_method: :delete } %>
       <% else %>
         <%# unless@item.sold? %>
         <%= link_to "購入画面に進む", "#", class: "item-red-btn" %>
