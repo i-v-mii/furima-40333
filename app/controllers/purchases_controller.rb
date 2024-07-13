@@ -1,38 +1,41 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, except: :index
+  before_action :make_item, only: [:new, :create]
 
   def index
   end
 
   def new
-    @purchases_destination = PurchasesDestination.new
+    @item = Item.find(params[:item_id])
+    @purchase_destination = PurchaseDestination.new
   end
 
   def create
-    @purchases_destination = PurchasesDestination.new(purchases_destination_params)
-    if @purchases_destination.valid?
-      @purchases_destination.save
+    @item = Item.find(params[:item_id])
+    @purchase_destination = PurchaseDestination.new(purchase_params)
+    if @purchase_destination.valid?
+      @purchase_destination.save
       redirect_to root_path
     else
-      render :index
+      render :new, status: :unprocessable_entity
     end
   end
+
+  private
 
   def make_item
     @item = Item.find(params[:item_id])
   end
 
-  def destination_params
-    params.require(:purchases_destination).permit(:post_code,
+  def purchase_params
+    params.require(:purchase_destination).permit(:post_code,
                                                   :shipping_source_id,
                                                   :municipality,
                                                   :street_address,
-                                                  :building_name, :tel
-                                                  )
+                                                  :building_name,
+                                                  :tel)
                                             .merge(user_id: current_user.id,
-                                                   item_id: params[:item_id],
-                                                    token: params[:token]
-                                                  )
+                                                   item_id: params[:item_id])
   end
-  
+
 end
