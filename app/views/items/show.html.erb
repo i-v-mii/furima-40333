@@ -9,12 +9,16 @@
     <div class="item-img-content">
       <%= image_tag url_for(@item.image), class: "item-box-img" %>
       <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <%# if item.sold_out? %>
-      <%# <div class="sold-out">
-        <span>Sold Out!!</span>
-      </div>%>
+      <% if @item.sold_out? %>
+        <div class="sold-out">
+          <span>Sold Out!!</span>
+        </div>
+      <% else %>
+        <% link_to '購入する', new_item_purchase_path(@item), class: 'btn btn-primary' %>
+      <% end %>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
     </div>
+
     <div class="item-price-box">
       <span class="item-price">
         ¥ <%= @item.price.to_s(:delimited) %>
@@ -26,13 +30,15 @@
 
     <% if user_signed_in? %>
       <% if current_user == @item.user %>
-        <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
-        <p class="or-text">or</p>
-        <%= link_to "削除",item_path(@item), method: :delete, remote: true, class: "item-destroy", data: { turbo_method: :delete } %>
+        <% unless @item.sold_out? %>
+          <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
+          <p class="or-text">or</p>
+          <%= link_to "削除",item_path(@item), method: :delete, remote: true, class: "item-destroy", data: { turbo_method: :delete } %>
+        <% end %>
       <% else %>
-
-        <%# unless@item.sold? %>
-        <%= link_to "購入画面に進む", new_item_purchase_path(@item), data: { turbo: false }, class: "item-red-btn" %>
+        <% unless @item.sold_out? %>
+          <%= link_to "購入画面に進む", new_item_purchase_path(@item), data: { turbo: false }, class: "item-red-btn" %>
+        <% end %>
       <% end %>
     <% end %>
 
@@ -90,7 +96,7 @@
       </p>
       <button type="submit" class="comment-btn">
         <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
+        <span>コメントする</span>
       </button>
     </form>
   </div>

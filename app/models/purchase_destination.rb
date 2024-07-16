@@ -1,6 +1,6 @@
 class PurchaseDestination
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :shipping_source_id, :municipality, :street_address, :building_name, :tel
+  attr_accessor :user_id, :item_id, :post_code, :shipping_source_id, :municipality, :street_address, :building_name, :tel,  :token
 
   with_options presence: true do
     validates :user_id, presence: true
@@ -10,6 +10,7 @@ class PurchaseDestination
     validates :municipality
     validates :street_address
     validates :tel, format: { with: /\A\d{10,11}\z/, message: "should be 10 or 11 digit numbers" }
+    validates :token, presence: true
   
   end
   validates :shipping_source_id, numericality: { only_integer: true }

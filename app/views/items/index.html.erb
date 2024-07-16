@@ -134,10 +134,11 @@
               <%= image_tag url_for(item.image), class: "item-img" if item.image.attached? %>
               
           <%# 商品が売れていればsold outを表示しましょう %>
-              <%# if item.sold_out? %>
-              <%#<div class='sold-out'>
-                  <span>Sold Out!!</span>
-              </div>%>
+            <% if item.sold_out? %>
+              <div class='sold-out'>
+                <span>Sold Out!!</span>
+              </div>
+            <% end%>
           <%# //商品が売れていればsold outを表示しましょう %>
 
             </div>

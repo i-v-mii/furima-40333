@@ -62,6 +62,12 @@ RSpec.describe PurchaseDestination, type: :model do
         expect(@purchase_destination.errors.full_messages).to include("Tel should be 10 or 11 digit numbers")
       end
 
+      it "tokenが空では登録できないこと" do
+        @purchase_destination.token = nil
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Token can't be blank")
+      end
+
       it 'user_idが紐づいていないと保存できないこと' do
         @purchase_destination.user_id = nil
         @purchase_destination.valid?

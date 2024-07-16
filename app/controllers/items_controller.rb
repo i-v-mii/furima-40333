@@ -22,9 +22,13 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.find(params[:id])
   end
 
   def edit
+    if @item.sold_out?
+      redirect_to root_path
+    end
   end
 
   def update
@@ -63,9 +67,6 @@ class ItemsController < ApplicationController
     unless current_user == @item.user
       redirect_to root_path
     end
-    #if @item.sold?
-    #  redirect_to root_path, alert: '売却済みの商品の情報は編集できません。'
-    #end
   end
 
 end
