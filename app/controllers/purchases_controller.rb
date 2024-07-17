@@ -7,7 +7,6 @@ class PurchasesController < ApplicationController
   end
 
   def new
-    @item = Item.find(params[:item_id])
     @purchase_destination = PurchaseDestination.new
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
   end
@@ -37,8 +36,7 @@ class PurchasesController < ApplicationController
                                                   :municipality,
                                                   :street_address,
                                                   :building_name,
-                                                  :tel,
-                                                  :token)
+                                                  :tel)
                                             .merge(user_id: current_user.id,
                                                    item_id: params[:item_id],
                                                    token: params[:token])

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PurchaseDestination, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    @item = FactoryBot.create(:item, user: @user)
+    @item = FactoryBot.create(:item)
     @purchase_destination = FactoryBot.build(:purchase_destination, user_id: @user.id, item_id: @item.id)
   end
 
@@ -56,8 +56,20 @@ RSpec.describe PurchaseDestination, type: :model do
         expect(@purchase_destination.errors.full_messages).to include("Tel can't be blank")
       end
 
-      it '電話番号が10桁以上11桁以内の半角数値でないと保存できないこと' do
+      it '電話番号が9桁以下の場合は保存できないこと' do
         @purchase_destination.tel = '123456789'
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Tel should be 10 or 11 digit numbers")
+      end
+      
+      it '電話番号が12桁以上の場合は保存できないこと' do
+        @purchase_destination.tel = '123456789012'
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Tel should be 10 or 11 digit numbers")
+      end
+      
+      it '電話番号に半角数値以外が含まれている場合は保存できないこと' do
+        @purchase_destination.tel = '12345a7890'
         @purchase_destination.valid?
         expect(@purchase_destination.errors.full_messages).to include("Tel should be 10 or 11 digit numbers")
       end
