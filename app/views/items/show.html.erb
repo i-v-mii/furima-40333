@@ -25,8 +25,8 @@
     </div>
 
     <% if user_signed_in? %>
+      <% unless @item.sold_out? %>
       <% if current_user == @item.user %>
-        <% unless @item.sold_out? %>
           <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
           <p class="or-text">or</p>
           <%= link_to "削除",item_path(@item), method: :delete, remote: true, class: "item-destroy", data: { turbo_method: :delete } %>
