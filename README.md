@@ -58,7 +58,7 @@
 | Column                 | Type       | Options                        |
 |------------------------|------------|--------------------------------|
 | post_code              | string     | null: false                    |
-| date_of_shipment_id    | integer    | null: false                    |
+| shipping_source_id     | integer    | null: false                    |
 | municipality           | string     | null: false                    |
 | street_address         | string     | null: false                    |
 | building_name          | string     |                                |
